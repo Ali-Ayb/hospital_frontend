@@ -69,6 +69,8 @@ window.onload = () => {
   const assign_employee = () => {
     let employee = employee_dropdown.value;
     let selected_hospitals = [];
+    let alert_shown = false;
+
     for (let i = 0; i < hospitals_dropdown2.options.length; i++) {
       if (hospitals_dropdown2.options[i].selected) {
         selected_hospitals.push(hospitals_dropdown2.options[i].value);
@@ -79,11 +81,12 @@ window.onload = () => {
       data.append("employee", employee);
       data.append("hospital", selected_hospitals[i]);
 
-      axios
+      promise = axios
         .post(`${base_url}assign_employee.php`, data, config)
         .then((result) => {
-          if (result.data.response) {
-            console.log("employee assigned");
+          if (result.data.response && !alert_shown) {
+            alert("employee assigned");
+            alert_shown = true;
           }
         });
     }
