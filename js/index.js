@@ -7,6 +7,7 @@ window.onload = () => {
   let choose_department_btn = document.getElementById("choose_department_btn");
   let choose_room_btn = document.getElementById("choose_room_btn");
   let choose_medication_btn = document.getElementById("choose_medication_btn");
+  let medication_quantity = document.getElementById("medication_quantity");
 
   const token = localStorage.getItem("jwt");
   const config = {
@@ -71,10 +72,11 @@ window.onload = () => {
 
   const assignMedication = () => {
     let medication = medications_dropdown.value;
+    medication_quantity = medication_quantity.value;
 
     let data = new FormData();
     data.append("medication", medication);
-    data.append("quantity", quantity);
+    data.append("quantity", medication_quantity);
 
     axios.post(`${base_url}add_medication.php`, data, config).then((result) => {
       if (result.data.response) {
